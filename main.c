@@ -10,6 +10,10 @@ struct Factor {
   int power;
 };
 
+int result_size;     // Start size of pResult is 2, assign later.
+int result_length;   // Length of pResult.
+struct Factor *pResult;  // Result.
+
 struct Factor *realloc_result(struct Factor **pResult, int *current_size);
 
 // @brief Add a factor to result.
@@ -20,7 +24,21 @@ int add_to_result(struct Factor **pResult,
     const struct Factor factor);
 
 int main(int argc, char **argv) {
-  int number = 120960;
+  int number;
+
+  if (argc <= 1) {
+    printf("Needs an argument\n");
+    printf("Try: %s 210\n", argv[0]);
+    return -1;  // User didn't give any argument.
+  }
+  {
+    char *endptr;
+    number = (int) strtol(argv[1], &endptr, 10);  // Base = 10.
+    if (*endptr != '\0') {
+      printf("The argument is not a number!\n");
+      return -1;  // Argument is not a number.
+    }
+  }
 
   // If number is less than 0.
   if (number <= 0) {
@@ -28,9 +46,9 @@ int main(int argc, char **argv) {
     return -1;
   }
 
-  int result_size = 2;  // Start size of pResult.
-  int result_length = 0;  // Length of pResult.
-  struct Factor *pResult = malloc(sizeof(struct Factor) * result_size);  // Result.
+  result_size = 2;
+  result_length = 0;
+  pResult = malloc(sizeof(struct Factor) * result_size);
   if (pResult == NULL) {
     perror("malloc");
     return -1;  // Can't malloc.
