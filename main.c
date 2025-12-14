@@ -54,25 +54,11 @@ int main(int argc, char **argv) {
     return -1;  // Can't malloc.
   }
 
-  bool is_prime = true;
   // Find prime numbers and check if the number is one of "number"'s factor.
   for (int i = 2; i <= number; i++) {
     if (number == 1) {
       // Exit this for loop.
       break;
-    }
-
-    // Check if i is a prime number.
-    is_prime = true;  // If is false, next number (i);
-    for (int j = 2; j < i; j++) {
-      if (i % j == 0) {
-        is_prime = false;
-        break;
-      }
-    }
-    if (!is_prime) {
-      // "i" isn't a prime number, next i.
-      continue;
     }
 
     // "i" is a prime number.
