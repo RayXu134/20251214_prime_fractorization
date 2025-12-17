@@ -146,6 +146,11 @@ int factorize(
   // Backup the number because the code below will modify it.
   const int original_number = number;
 
+  if (number == 1) {
+    struct Factor factor = {1, 1};
+    add_to_result(pResult, &result_size, result_length, factor);
+  }
+
   // Handle factor 2.
   int power_count = 0;
   while (number % 2 == 0) {
@@ -164,10 +169,6 @@ int factorize(
   // Handle factors after 2.
   for (num i = 3; i * i <= number; i += 2) {
 
-    if (number == 1) {
-      // Exit this for loop.
-      break;
-    }
 
     power_count = 0;
     while (number % i == 0) {
